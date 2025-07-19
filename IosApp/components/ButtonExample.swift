@@ -9,10 +9,38 @@ import SwiftUI
 
 struct ButtonExample: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button("Hola"){
+            print("Btn press")
+        }
+        Button(
+            action:{print("Hola mundo")}, label: {
+                Text("Hola Mundo")
+                    .frame(width: 100,height: 50)
+                    .foregroundColor(.white)
+                    .background(.blue)
+                    .cornerRadius(10)
+            }
+        )
     }
 }
 
+struct Coueter:View {
+    @State var count = 0
+    var body: some View {
+        Button(
+            action:{count += 1}, label: {
+                Text("Contador: \(count) ")
+                    .frame(width: 100,height: 50)
+                    .foregroundColor(.white)
+                    .background(.blue)
+                    .cornerRadius(10)
+            }
+        )     }
+}
+
 #Preview {
-    ButtonExample()
+    VStack {
+        ButtonExample()
+        Coueter()
+    }
 }

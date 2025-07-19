@@ -9,7 +9,11 @@ import SwiftUI
 
 struct LabelExample: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Label("Hola mundo", systemImage: "figure.badminton")
+        Label( title:{Text("Label")},
+               icon: {Image("stoa").resizable().frame(width: 50,height: 50)}
+        )
+
     }
 }
 
