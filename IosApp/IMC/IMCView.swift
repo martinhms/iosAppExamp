@@ -14,6 +14,7 @@ struct IMCView: View {
     //        [.foregroundColor: UIColor.white]
     //    }
     @State var gender:Int = 0
+    @State var height:Double = 150
     var body: some View {
         VStack{
             HStack{
@@ -21,6 +22,7 @@ struct IMCView: View {
                 ToggleBtn(text: "Mujer", imageName: "heart.fill", gender:1,selectedGender: $gender )
 
             }
+            HeigthSlider(text: "Altura", selecterHeight:$height)
         }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,maxHeight: .infinity)
             .background(.imcBackground)
             .toolbar{
@@ -33,39 +35,7 @@ struct IMCView: View {
     }
 }
 
-struct ToggleBtn:View {
-    let text:String
-    let imageName:String
-    let gender: Int
-    @Binding var selectedGender:Int
-    
-    var body: some View {
-        
-        let color = if(gender == selectedGender){
-            Color.imcBackgroundSelected
-        }else{
-            Color.imcBackgroundComponent
-        }
-        
-        Button(action: {selectedGender = gender}){
-            VStack{
-                Image(systemName: imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 100)
-                    .foregroundColor(.white)
-                InformationText(text: text)
-            }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity).background(color)
-        }
-    }
-}
 
-struct InformationText:View {
-    let text: String
-    var body: some View {
-        Text(text).font(.largeTitle).bold().foregroundColor(.white)
-    }
-}
 
 #Preview {
     IMCView()
