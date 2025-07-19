@@ -32,6 +32,7 @@ struct IMCView: View {
                 CounterComponent(text: "Edad", value: $age, range: ageRange)
                 CounterComponent(text: "Peso", value: $weigth, range: weigthRange)
             }
+            IMCCalculatorBtn(userWight: Double(weigth), userHeight: height)
         }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,maxHeight: .infinity)
             .background(.imcBackground)
             .toolbar{
@@ -41,6 +42,18 @@ struct IMCView: View {
             }
         //            .navigationBarBackButtonHidden()
         //            .navigationTitle("IMC Calculator")
+    }
+}
+
+struct IMCCalculatorBtn:View {
+    let userWight:Double
+    let userHeight:Double
+    var body: some View {
+        NavigationStack{
+            NavigationLink(destination:IMCResult(userWight: userWight, userHeight: userHeight)){
+                Text("Calcular").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).bold().foregroundColor(.purple).frame(maxWidth: .infinity, maxHeight: 100).background(.imcBackgroundComponent)
+            }
+        }
     }
 }
 
