@@ -15,14 +15,23 @@ struct IMCView: View {
     //    }
     @State var gender:Int = 0
     @State var height:Double = 150
+    @State var age:Int = 10
+    @State var weigth:Int = 14
+    var ageRange:ClosedRange = 1...100
+    var weigthRange:ClosedRange = 10...200
+    
     var body: some View {
         VStack{
             HStack{
                 ToggleBtn(text: "Hombre", imageName: "heart.fill", gender:0,selectedGender: $gender )
                 ToggleBtn(text: "Mujer", imageName: "heart.fill", gender:1,selectedGender: $gender )
-
+                
             }
             HeigthSlider(text: "Altura", selecterHeight:$height)
+            HStack{
+                CounterComponent(text: "Edad", value: $age, range: ageRange)
+                CounterComponent(text: "Peso", value: $weigth, range: weigthRange)
+            }
         }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,maxHeight: .infinity)
             .background(.imcBackground)
             .toolbar{

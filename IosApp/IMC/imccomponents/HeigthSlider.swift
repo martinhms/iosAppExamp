@@ -21,3 +21,8 @@ struct HeigthSlider: View {
         }
     }
 
+#Preview {
+    HeigthSlider(text: "Altura", selecterHeight: .constant(170))
+        .padding()
+        .background(Color.black)
+} 
