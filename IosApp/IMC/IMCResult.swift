@@ -26,7 +26,7 @@ struct IMCResult: View {
 }
 
 func calculateImc(weight: Double, height:Double)-> Double{
-    let result = weight/(height/100)*2
+    let result = weight/((height/100))*((height/100))
     return result
 }
 

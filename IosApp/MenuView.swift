@@ -10,16 +10,15 @@ import SwiftUI
 struct MenuView: View {
     var body: some View {
         NavigationStack{
-            VStack{
+            List{
                 NavigationLink(destination: IMCView()){
                     Text("IMC calculator")
                 }
                 NavigationLink(destination:ImageExample()){
                     Text("ImageExample")
                 }
-                NavigationLink{
-                } label: {
-                    Text("IMC Calculator")
+                NavigationLink(destination: ListExample()){
+                    Text("List Examples")
                 }
             }
         }
