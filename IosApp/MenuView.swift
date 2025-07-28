@@ -19,6 +19,9 @@ struct MenuView: View {
                 }
                 NavigationLink(destination: ListExample()){
                     Text("List Examples")
+                } 
+                NavigationLink(destination: SuperheroSearcher()){
+                    Text("Superhero Searcher")
                 }
             }
         }
