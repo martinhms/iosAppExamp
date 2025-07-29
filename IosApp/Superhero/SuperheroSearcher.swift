@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct SuperheroSearcher: View {
     @State var superheroName:String = ""
     @State var wrapper: ApiNetwork.Wrapper? = nil
+    @State var loading: Bool = false
     var body: some View {
         VStack{
             TextField("", text: $superheroName, prompt: Text("Superman...").font(.title2).bold().foregroundColor(.gray))
@@ -21,6 +23,7 @@ struct SuperheroSearcher: View {
                 .padding(8)
                 .autocorrectionDisabled() //desactiva el autocorrector del diccionadrio
                 .onSubmit {
+                    loading = true
                     print(superheroName)
                     Task{ // TODO agregar nota
                         do{
@@ -29,10 +32,18 @@ struct SuperheroSearcher: View {
                         }catch{
                             print("error")
                         }
+                        loading = false
                     }
                 }
+            if(loading){
+                ProgressView().tint(.white)
+            }
             List(wrapper?.results ?? []){ superhero in
-                SuperheroItem(superhero: superhero)
+                ZStack{
+                    SuperheroItem(superhero: superhero)
+                    NavigationLink(destination: SuperheroDetail(id:superhero.id)) {EmptyView()}.opacity(0)
+                }.listRowBackground(Color.imcBackground)
+                
             }.listStyle(.plain)
             Spacer()
         }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity).background(.imcBackground)
@@ -44,6 +55,11 @@ struct SuperheroItem: View {
     var body: some View {
         ZStack{
             Rectangle()
+            WebImage(url: URL(string: superhero.image.url))
+                .resizable()
+                .indicator(.activity)
+                .scaledToFill()
+                .frame(height: 200)
             VStack{
                 Spacer()
                 Text(superhero.name).foregroundColor(.white)
@@ -61,5 +77,5 @@ struct SuperheroItem: View {
 }
 
 #Preview {
-    SuperheroItem(superhero: ApiNetwork.Superhero(id: "1", name: "Iron Man"))
+    SuperheroItem(superhero: ApiNetwork.Superhero(id: "1", name: "Iron Man", image: ApiNetwork.ImageSuperhero(url: "test")))
 }
