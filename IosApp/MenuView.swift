@@ -22,6 +22,9 @@ struct MenuView: View {
                 } 
                 NavigationLink(destination: SuperheroSearcher()){
                     Text("Superhero Searcher")
+                }  
+                NavigationLink(destination: MapPlaces()){
+                    Text("Fav Places")
                 }
             }
         }
