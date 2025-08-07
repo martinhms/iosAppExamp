@@ -26,6 +26,9 @@ struct MenuView: View {
                 NavigationLink(destination: MapPlaces()){
                     Text("Fav Places")
                 }
+                NavigationLink(destination: PetmatcherView()){
+                    Text("Pet Matcher")
+                }
             }
         }
     }
