@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import UIKit
+import SDWebImageSwiftUI
+
 
 struct PetCardView: View {
     let pet: Pet
@@ -19,15 +22,15 @@ struct PetCardView: View {
             
             VStack(spacing: 0) {
                 // Imagen
-                AsyncImage(url: URL(string: currentPhotoUrl)) { image in
+                WebImage(url: URL(string: currentPhotoUrl)) { image in
                     image
-                        .resizable().scaledToFit()
+                 
                 } placeholder: {
                     ProgressView()
                 }
-                .frame(height: 450)
-                .clipped()
-                
+                .resizable()
+                .scaledToFill()
+                .frame(height: 400)
                 // Contenido de texto
                 VStack(alignment: .leading, spacing: 5) {
                     // Nombres y edades
@@ -61,11 +64,28 @@ struct PetCardView: View {
                     }
                     .foregroundColor(.black.opacity(0.8))
                 }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 16)
+                .padding(.horizontal, 16)
+                .padding(.top, 10)
+                .padding(.bottom, 16)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .cornerRadius(32)
         //.frame(height: 680)
+    }
+}
+
+// Helper para redondear solo las esquinas deseadas
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+    
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        return Path(path.cgPath)
     }
 }
