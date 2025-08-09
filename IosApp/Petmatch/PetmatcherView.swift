@@ -16,7 +16,6 @@ struct PetmatcherView:  View {
         ZStack {
             Color(.petmatchBackground)
                 .ignoresSafeArea()
-            
             if isLoading {
                 ProgressView()
             } else if let pet = currentPet {
@@ -35,7 +34,7 @@ struct PetmatcherView:  View {
                         onRightTap: { onDecision(true) }
                     )
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 12)
             }
         }.navigationBarBackButtonHidden()
         .task {

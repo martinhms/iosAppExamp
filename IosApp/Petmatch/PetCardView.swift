@@ -65,6 +65,7 @@ struct PetCardView: View {
                 .padding(.vertical, 16)
             }
         }
-        .frame(width: 340, height: 680)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        //.frame(height: 680)
     }
 }
