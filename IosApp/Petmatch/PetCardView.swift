@@ -16,21 +16,16 @@ struct PetCardView: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 25)
+            RoundedRectangle(cornerRadius: 32)
                 .fill(.white)
-                .shadow(radius: 5)
-            
-            VStack(spacing: 0) {
+            VStack() {
                 // Imagen
-                WebImage(url: URL(string: currentPhotoUrl)) { image in
-                    image
-                 
-                } placeholder: {
-                    ProgressView()
-                }
+                WebImage(url: URL(string: currentPhotoUrl))
                 .resizable()
-                .scaledToFill()
+                .indicator(.activity)
+                .frame(maxWidth: .infinity)
                 .frame(height: 400)
+                .cornerRadius(32)
                 // Contenido de texto
                 VStack(alignment: .leading, spacing: 5) {
                     // Nombres y edades
@@ -71,21 +66,11 @@ struct PetCardView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .cornerRadius(32)
-        //.frame(height: 680)
     }
 }
-
-// Helper para redondear solo las esquinas deseadas
-struct RoundedCorner: Shape {
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(
-            roundedRect: rect,
-            byRoundingCorners: corners,
-            cornerRadii: CGSize(width: radius, height: radius)
-        )
-        return Path(path.cgPath)
-    }
+#Preview {
+    let sampleUrl = "https://images.dog.ceo/breeds/husky/n02110185_12619.jpg"
+    let pet = Pet.samplePet()
+    let currentUrl = pet.photos.first ?? sampleUrl
+    return PetCardView(pet: pet, currentPhotoUrl: currentUrl)
 }
