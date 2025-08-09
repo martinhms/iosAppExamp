@@ -10,8 +10,6 @@ import SwiftUI
 struct PetCardView: View {
     let pet: Pet
     let currentPhotoUrl: String
-    @State private var offset = CGSize.zero
-    var onSwipe: ((Bool) -> Void)? = nil
     
     var body: some View {
         ZStack {
@@ -23,16 +21,15 @@ struct PetCardView: View {
                 // Imagen
                 AsyncImage(url: URL(string: currentPhotoUrl)) { image in
                     image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill).scaledToFit()
+                        .resizable().scaledToFit()
                 } placeholder: {
                     ProgressView()
                 }
-                .frame(height: 400)
+                .frame(height: 450)
                 .clipped()
                 
                 // Contenido de texto
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 5) {
                     // Nombres y edades
                     HStack {
                         Text("\(pet.ownerName), \(pet.ownerAge)")
@@ -64,36 +61,10 @@ struct PetCardView: View {
                     }
                     .foregroundColor(.black.opacity(0.8))
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 10)
                 .padding(.vertical, 16)
             }
         }
         .frame(width: 340, height: 680)
-        .offset(x: offset.width, y: offset.height * 0.4)
-        .rotationEffect(.degrees(Double(offset.width / 40)))
-        .gesture(
-            DragGesture()
-                .onChanged { gesture in
-                    offset = gesture.translation
-                }
-                .onEnded { _ in
-                    withAnimation {
-                        handleSwipe(width: offset.width)
-                    }
-                }
-        )
-    }
-    
-    private func handleSwipe(width: CGFloat) {
-        switch width {
-        case -500...(-150):
-            offset = CGSize(width: -500, height: 0)
-            onSwipe?(false)
-        case 150...500:
-            offset = CGSize(width: 500, height: 0)
-            onSwipe?(true)
-        default:
-            offset = .zero
-        }
     }
 }
