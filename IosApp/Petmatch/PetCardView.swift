@@ -12,20 +12,35 @@ import SDWebImageSwiftUI
 
 struct PetCardView: View {
     let pet: Pet
-    let currentPhotoUrl: String
+    @State private var currentPhotoIndex: Int = 0
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 32)
                 .fill(.white)
             VStack() {
-                WebImage(url: URL(string: currentPhotoUrl))
+                WebImage(url: URL(string: pet.photos[min(currentPhotoIndex, min(pet.photos.count - 1, 9))]))
                 .resizable()
                 .indicator(.activity)
                 .frame(maxWidth: .infinity)
                 .frame(height: 400)
+                .scaledToFit()
                 .cornerRadius(32)
+                .onTapGesture {
+                    let maxPhotos = min(pet.photos.count, 10)
+                    if currentPhotoIndex < maxPhotos - 1 {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            currentPhotoIndex += 1
+                        }
+                    } else {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            currentPhotoIndex = 0
+                        }
+                    }
+                }
+            
                 PetPreviewDataView(pet: pet)
+                Color.clear.frame(height: 70)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -65,8 +80,6 @@ struct PetPreviewDataView: View {
 }
 
 #Preview {
-    let sampleUrl = "https://images.dog.ceo/breeds/husky/n02110185_12619.jpg"
     let pet = Pet.samplePet()
-    let currentUrl = pet.photos.first ?? sampleUrl
-    return PetCardView(pet: pet, currentPhotoUrl: currentUrl)
+    return PetCardView(pet: pet)
 }

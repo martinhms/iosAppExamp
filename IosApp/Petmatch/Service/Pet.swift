@@ -19,7 +19,7 @@ struct Pet: Identifiable, Decodable {
     var petAge: Int = 4
     var breed: String = "Golden Retriever Mix"
     var likes: String = "Playing fetch, belly rubs"
-    var about: String = "Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents."
+    var about: String = "Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents.Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents.Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents.Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents.Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents.Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents.Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents.Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents.Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents.Dog lover, enjoy long walks and going on outdoor adventures! Looking to connect with other pet parents."
     
     // Para inicializar con fotos de prueba
     static func samplePet() -> Pet {

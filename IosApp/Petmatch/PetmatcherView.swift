@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PetmatcherView:  View {
     @State private var currentPet: Pet? = nil
-    @State private var currentPhotoIndex: Int = 0
     @State private var isLoading = false
     
     var body: some View {
@@ -20,15 +19,10 @@ struct PetmatcherView:  View {
                 ProgressView()
             } else if let pet = currentPet {
                 ZStack {
-                    PetCardView(
-                        pet: pet,
-                        currentPhotoUrl: pet.photos[currentPhotoIndex]
-                    )
+                    PetCardView(pet: pet)
                     DisclaimersBtnsView(
                         leftIconName: "xmark",
                         rightIconName: "heart.fill",
-                        leftColor: .orange,
-                        rightColor: .green,
                         buttonSize: 60,
                         onLeftTap: { onDecision(false) },
                         onRightTap: { onDecision(true) }
@@ -36,7 +30,12 @@ struct PetmatcherView:  View {
                 }
                 .padding(.horizontal, 12)
             }
-        }.navigationBarBackButtonHidden()
+        }    .background(.imcBackground)
+            .toolbar{
+                ToolbarItem(placement: .principal){
+                    Text("Petmatch").bold().foregroundColor(.white)
+                }
+            }
         .task {
             await loadPet()
         }
@@ -60,12 +59,7 @@ struct PetmatcherView:  View {
 
     private func onDecision(_ liked: Bool) {
         guard let pet = currentPet else { return }
-        if currentPhotoIndex < pet.photos.count - 1 {
-            withAnimation { currentPhotoIndex += 1 }
-        } else {
-            currentPhotoIndex = 0
-            Task { await loadPet() }
-        }
+        Task { await loadPet() }
         print(liked ? "Me gusta" : "No me gusta")
     }
 }
@@ -86,8 +80,8 @@ struct DisclaimersBtnsView: View {
     init(
         leftIconName: String = "xmark",
         rightIconName: String = "heart.fill",
-        leftColor: Color = .orange,
-        rightColor: Color = .green,
+        leftColor: Color = .petmatchBackground,
+        rightColor: Color = .petmatchGreen,
         buttonSize: CGFloat = 80,
         onLeftTap: @escaping () -> Void = {},
         onRightTap: @escaping () -> Void = {}
@@ -127,7 +121,7 @@ struct DisclaimersBtnsView: View {
                         )
                 }
             }
-            .padding(.bottom, 24)
+            .padding(.bottom, 15)
         }
     }
 }
