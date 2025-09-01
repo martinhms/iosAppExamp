@@ -29,6 +29,12 @@ struct MenuView: View {
                 NavigationLink(destination: PetmatcherView()){
                     Text("Pet Matcher")
                 }
+                NavigationLink(destination:   WebViewScreen(
+                    url: URL(string: "https://ceonline.com.ar/__app/")!,
+                    title: "Expensas Online"
+                )){
+                    Text("Expensas Online")
+                }
             }
         }
     }
